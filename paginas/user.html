@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Conta - TecEmCasa</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons from Lucide -->
+    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for a more subtle look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #60a5fa;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+        .modal-content {
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/index.html" class="text-2xl font-bold text-blue-600">
+                TecEmCasa
+            </a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="index.html#services" class="text-slate-600 hover:text-blue-600 transition duration-300">Serviços</a>
+                <a href="index.html#scheduling" class="text-slate-600 hover:text-blue-600 transition duration-300">Agendamento</a>
+                <a href="index.html#reviews" class="text-slate-600 hover:text-blue-600 transition duration-300">Avaliações</a>
+                <a href="#" title="Minha Conta" class="text-blue-600 font-semibold p-2 rounded-full bg-blue-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-circle-2"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
+                </a>
+            </div>
+             <button id="mobile-menu-button" class="md:hidden text-slate-600 hover:text-blue-600 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200">
+            <a href="index.html#services" class="block py-3 px-6 text-slate-600 hover:bg-blue-50">Serviços</a>
+            <a href="index.html#scheduling" class="block py-3 px-6 text-slate-600 hover:bg-blue-50">Agendamento</a>
+            <a href="index.html#reviews" class="block py-3 px-6 text-slate-600 hover:bg-blue-50">Avaliações</a>
+            <a href="#" class="block py-3 px-6 text-blue-600 bg-blue-50 font-semibold">Minha Conta</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 md:py-20">
+        
+        <header class="mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Minha Conta</h1>
+            <p class="text-slate-600 mt-1">Veja suas informações e histórico de serviços.</p>
+        </header>
+
+        <div class="grid lg:grid-cols-3 gap-10">
+            <!-- User Info Card -->
+            <aside class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                    <div class="flex flex-col items-center text-center">
+                        <img id="user-avatar" src="" alt="" class="w-20 h-20 rounded-full mb-4 border-4 border-white shadow-md">
+                        <h2 id="user-name" class="text-xl font-bold text-slate-800"></h2>
+                        <p id="user-email" class="text-slate-500"></p>
+                    </div>
+                    <hr class="my-6 border-slate-200">
+                    <div>
+                        <h3 class="font-semibold text-slate-700 mb-2">Endereço Principal</h3>
+                        <p id="user-address" class="text-slate-600 text-sm"></p>
+                    </div>
+                     <button id="open-edit-modal-btn" class="mt-6 w-full bg-slate-100 text-slate-700 font-semibold py-2 px-4 rounded-lg hover:bg-slate-200 transition duration-300">
+                        Editar Perfil
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Service History -->
+            <section class="lg:col-span-2">
+                 <h2 class="text-2xl font-bold text-slate-900 mb-4">Histórico de Serviços</h2>
+                 <div id="service-history-list" class="space-y-6">
+                    <!-- Service history items will be injected here by JavaScript -->
+                 </div>
+                 <!-- Botão para carregar mais -->
+                 <div id="load-more-container" class="text-center pt-8">
+                     <button id="load-more-btn" class="bg-white text-slate-700 font-semibold py-2 px-5 rounded-lg border border-slate-300 hover:bg-slate-100 transition duration-300">
+                         Carregar mais
+                     </button>
+                 </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-opacity duration-300">
+        <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-slate-800">Editar Perfil</h2>
+                <button id="close-modal-btn" class="text-slate-400 hover:text-slate-800 text-3xl leading-none">&times;</button>
+            </div>
+            <form id="edit-profile-form">
+                <div class="mb-4">
+                    <label for="edit-name" class="block text-slate-700 font-semibold mb-2">Nome Completo</label>
+                    <input type="text" id="edit-name" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                </div>
+                <div class="mb-4">
+                    <label for="edit-email" class="block text-slate-700 font-semibold mb-2">Email</label>
+                    <input type="email" id="edit-email" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                </div>
+                <div class="mb-6">
+                    <label for="edit-address" class="block text-slate-700 font-semibold mb-2">Endereço</label>
+                    <textarea id="edit-address" rows="4" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required></textarea>
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" id="cancel-edit-btn" class="bg-slate-100 text-slate-700 font-semibold py-2 px-6 rounded-lg hover:bg-slate-200 transition duration-300">Cancelar</button>
+                    <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-300 mt-20">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold text-white">TecEmCasa</h3>
+                    <p class="text-sm text-slate-400">Sua ajuda técnica de confiança.</p>
+                </div>
+                <div class="text-center md:text-right">
+                    <p>Fale conosco:</p>
+                    <p class="font-semibold text-white">contato@tecemcasa.com.br</p>
+                </div>
+            </div>
+            <div class="border-t border-slate-700 mt-6 pt-6 text-center text-sm text-slate-400">
+                <p>&copy; 2024 TecEmCasa. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Global State ---
+            let currentUser = null;
+            let itemsToShow = 3;
+
+            // --- DOM Elements ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const userAvatarEl = document.getElementById('user-avatar');
+            const userNameEl = document.getElementById('user-name');
+            const userEmailEl = document.getElementById('user-email');
+            const userAddressEl = document.getElementById('user-address');
+            const historyListContainer = document.getElementById('service-history-list');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            const loadMoreContainer = document.getElementById('load-more-container');
+            const openModalBtn = document.getElementById('open-edit-modal-btn');
+            const modal = document.getElementById('edit-profile-modal');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const cancelEditBtn = document.getElementById('cancel-edit-btn');
+            const editForm = document.getElementById('edit-profile-form');
+            const editNameInput = document.getElementById('edit-name');
+            const editEmailInput = document.getElementById('edit-email');
+            const editAddressInput = document.getElementById('edit-address');
+
+            // --- Helper Functions ---
+            function getInitials(name) {
+                if (!name) return '';
+                const nameParts = name.trim().split(' ').filter(part => part);
+                if (nameParts.length === 0) return '';
+                if (nameParts.length === 1) return nameParts[0].substring(0, 2).toUpperCase();
+                const firstInitial = nameParts[0].charAt(0);
+                const lastInitial = nameParts[nameParts.length - 1].charAt(0);
+                return `${firstInitial}${lastInitial}`.toUpperCase();
+            }
+
+            function formatDate(dateString) {
+                const date = new Date(dateString + 'T00:00:00'); // Ensure correct date parsing
+                return date.toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric'
+                });
+            }
+
+            // --- Rendering Functions ---
+            function renderUserProfile() {
+                if (!currentUser) return;
+                const initials = getInitials(currentUser.nome);
+                const avatarUrl = `https://placehold.co/80x80/93C5FD/1E40AF?text=${initials}`;
+                userAvatarEl.src = avatarUrl;
+                userAvatarEl.alt = `Foto de ${currentUser.nome}`;
+                userNameEl.textContent = currentUser.nome;
+                userEmailEl.textContent = currentUser.email;
+                userAddressEl.innerHTML = currentUser.endereco.replace(/\n/g, '<br>');
+            }
+
+            function renderServices() {
+                if (!currentUser) return;
+                const servicesToRender = currentUser.historico_servicos.slice(0, itemsToShow);
+                let servicesHtml = '';
+                servicesToRender.forEach(service => {
+                    let statusHtml = '';
+                    switch (service.status) {
+                        case 'Concluído': statusHtml = `<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">Concluído</span>`; break;
+                        case 'Agendado': statusHtml = `<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-800">Agendado</span>`; break;
+                        case 'Cancelado': statusHtml = `<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-800">Cancelado</span>`; break;
+                    }
+                    let actionHtml = '';
+                    if (service.status === 'Concluído') {
+                        if (service.avaliacao) {
+                            const stars = '★'.repeat(service.avaliacao) + '☆'.repeat(5 - service.avaliacao);
+                            actionHtml = `<span class="text-slate-500 text-sm">Avaliado ${stars}</span>`;
+                        } else {
+                            actionHtml = `<a href="#" class="text-blue-600 hover:underline font-semibold">Avaliar</a>`;
+                        }
+                    }
+                    servicesHtml += `
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 hover:border-blue-400 transition-colors duration-300">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center">
+                            <div>
+                                <p class="text-sm text-slate-500">${formatDate(service.data)}</p>
+                                <h3 class="text-lg font-bold text-blue-600">${service.tipo}</h3>
+                                <p class="text-sm text-slate-600 mt-1">Técnico: ${service.tecnico}</p>
+                            </div>
+                            <div class="mt-4 sm:mt-0 flex items-center space-x-4">
+                                ${statusHtml}
+                                ${actionHtml}
+                            </div>
+                        </div>
+                    </div>`;
+                });
+                historyListContainer.innerHTML = servicesHtml;
+                if (itemsToShow >= currentUser.historico_servicos.length) {
+                    loadMoreContainer.style.display = 'none';
+                } else {
+                    loadMoreContainer.style.display = 'block';
+                }
+            }
+
+            // --- Modal Logic ---
+            function openModal() {
+                if (!currentUser) return;
+                editNameInput.value = currentUser.nome;
+                editEmailInput.value = currentUser.email;
+                editAddressInput.value = currentUser.endereco;
+                modal.classList.remove('hidden');
+            }
+            function closeModal() {
+                modal.classList.add('hidden');
+            }
+
+            // --- Event Listeners ---
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            openModalBtn.addEventListener('click', openModal);
+            closeModalBtn.addEventListener('click', closeModal);
+            cancelEditBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+            editForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                currentUser.nome = editNameInput.value;
+                currentUser.email = editEmailInput.value;
+                currentUser.endereco = editAddressInput.value;
+                renderUserProfile();
+                closeModal();
+            });
+
+            loadMoreBtn.addEventListener('click', () => {
+                itemsToShow += 3;
+                renderServices();
+            });
+            
+            // --- Initialization ---
+            async function initializeApp() {
+                try {
+                    const response = await fetch('../backEnd/users.json');
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const users = await response.json();
+                    
+                    // Set the current user (e.g., the first user for this demo)
+                    currentUser = users.find(u => u.id === 'user002');
+                    
+                    if(currentUser) {
+                        // Render the page with the fetched data
+                        renderUserProfile();
+                        renderServices();
+                    } else {
+                        console.error("User with ID user001 not found.");
+                    }
+
+                } catch (error) {
+                    console.error('Failed to fetch user data:', error);
+                    // Optionally, display an error message to the user on the page
+                }
+            }
+
+            initializeApp();
+        });
+    </script>
+
+</body>
+</html>
