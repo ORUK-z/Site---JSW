@@ -1,0 +1,82 @@
+[
+  {
+    "id": "user001",
+    "nome": "João Silva",
+    "email": "joao.silva@email.com",
+    "endereco": "Rua das Flores, 123, Bairro Centro\nSão Paulo, SP - 01000-000",
+    "historico_servicos": [
+      {
+        "id_servico": "svc957",
+        "data": "2024-06-10",
+        "tipo": "Suporte de TI",
+        "tecnico": "Ana Souza",
+        "status": "Agendado",
+        "avaliacao": null
+      },
+      {
+        "id_servico": "svc834",
+        "data": "2024-05-15",
+        "tipo": "Montagem de Móveis",
+        "tecnico": "Carlos Pereira",
+        "status": "Concluído",
+        "avaliacao": 5
+      },
+      {
+        "id_servico": "svc741",
+        "data": "2024-04-22",
+        "tipo": "Suporte de TI",
+        "tecnico": "Ana Souza",
+        "status": "Concluído",
+        "avaliacao": 5
+      }
+    ]
+  },
+  {
+    "id": "user002",
+    "nome": "Maria Oliveira",
+    "email": "maria.o@email.com",
+    "endereco": "Avenida Principal, 456, Vila Nova\nRio de Janeiro, RJ - 20000-000",
+    "historico_servicos": [
+      {
+        "id_servico": "svc982",
+        "data": "2024-05-20",
+        "tipo": "Serviços Elétricos",
+        "tecnico": "Ricardo Mendes",
+        "status": "Concluído",
+        "avaliacao": 4
+      },
+      {
+        "id_servico": "svc801",
+        "data": "2024-04-11",
+        "tipo": "Montagem de Móveis",
+        "tecnico": "Carlos Pereira",
+        "status": "Concluído",
+        "avaliacao": 5
+      }
+    ]
+  },
+  {
+    "id": "user003",
+    "nome": "Carlos Eduardo",
+    "email": "carlos.edu@email.com",
+    "endereco": "Praça da Matriz, 789, Setor Sul\nBelo Horizonte, MG - 30000-000",
+    "historico_servicos": [
+      {
+        "id_servico": "svc991",
+        "data": "2024-06-01",
+        "tipo": "Suporte de TI",
+        "tecnico": "Ana Souza",
+        "status": "Cancelado",
+        "avaliacao": null
+      },
+      {
+        "id_servico": "svc852",
+        "data": "2024-05-02",
+        "tipo": "Serviços Elétricos",
+        "tecnico": "Ricardo Mendes",
+        "status": "Concluído",
+        "avaliacao": 5
+      }
+    ]
+  }
+]
