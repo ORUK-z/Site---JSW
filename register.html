@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastro - TecEmCasa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('erro') === 'email') {
+    alert("Email já está em uso. Tente outro.");
+  }
+</script>
+
+<body class="bg-slate-50 flex items-center justify-center min-h-screen">
+
+  <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border border-slate-200">
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">Criar Conta no TecEmCasa</h1>
+    <form action="/register" method="POST" class="space-y-4">
+      <div>
+        <label for="name" class="block text-slate-700 font-semibold mb-1">Nome</label>
+        <input type="text" id="name" name="name" required
+               class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div>
+        <label for="email" class="block text-slate-700 font-semibold mb-1">Email</label>
+        <input type="email" id="email" name="email" required
+               class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div>
+        <label for="senha" class="block text-slate-700 font-semibold mb-1">Senha</label>
+        <input type="password" id="senha" name="senha" required
+               class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <button type="submit"
+              class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+        Cadastrar
+      </button>
+    </form>
+    <p class="text-center text-sm text-slate-500 mt-4">
+      Já tem uma conta?
+      <a href="/login.html" class="text-blue-600 hover:underline">Entrar</a>
+    </p>
+  </div>
+
+</body>
+</html>
